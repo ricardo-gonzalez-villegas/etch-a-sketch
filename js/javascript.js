@@ -4,21 +4,16 @@ const body = document.querySelector("body");
 
 const controls = document.querySelector("#controls");
 
-let squares;
-
-if (!squares) {
-  createGrid();
-}
+createGrid();
 
 function createGrid() {
-  for (let i = 16; i > 0; i--) {
-    for (let j = 1; j < 17; j++) {
+  for (let i = 0; i < 16; i++) {
+    for (let j = 0; j < 16; j++) {
       const gridItem = document.createElement("div");
       container.appendChild(gridItem).classList.add("griditem");
-      //gridItem.setAttribute("id", "x" + j + "y" + i);
     }
   }
-  addEvent();
+  addInitialHandler();
 }
 
 function createNewGrid(squares) {
@@ -29,31 +24,86 @@ function createNewGrid(squares) {
         container.appendChild(gridItem).classList.add("griditem");
         gridItem.style.width = getPercentage(squares);
         gridItem.style.height = getPercentage(squares);
-        //gridItem.setAttribute("id", "x" + j + "y" + i);
       }
     }
   }
-  addEvent();
+  addInitialHandler();
 }
 
-function addEvent() {
+function addInitialHandler() {
   const gridItems = document.querySelectorAll(".griditem");
   gridItems.forEach(gridItem => {
     gridItem.addEventListener("mouseover", event => {
-      event.target.style.background = "black";
+      if (!event.target.dataset.value) {
+        event.target.dataset.value = 100;
+      } else {
+        event.target.dataset.value = event.target.dataset.value - 10;
+        if (event.target.dataset.value < 0) {
+          event.target.dataset.value = 0;
+        }
+      }
+      let currentValue = event.target.dataset.value;
+      event.target.style.backgroundColor =
+        "rgb(" + currentValue + "," + currentValue + "," + currentValue + ")";
     });
   });
 }
 
-const button = document.createElement("button");
-button.textContent = "Reset";
-controls.appendChild(button);
+function changeGreyscale() {
+  const gridItems = document.querySelectorAll(".griditem");
+  gridItems.forEach(gridItem => {
+    gridItem.removeEventListener("mouseover", colorHandler);
+    gridItem.addEventListener("mouseover", greyscaleHandler);
+  });
+}
 
-button.addEventListener("click", () => {
-  squares = prompt("How many squares per side?", 16);
+let greyscaleHandler = event => {
+  let currentValue = event.target.dataset.value;
+  event.target.style.backgroundColor =
+    "rgb(" + currentValue + "," + currentValue + "," + currentValue + ")";
+};
+
+const resetButton = document.createElement("button");
+resetButton.textContent = "Reset";
+controls.appendChild(resetButton);
+resetButton.addEventListener("click", () => {
+  let squares = prompt("How many squares per side?", 16);
   clearContainer();
   createNewGrid(squares);
 });
+
+const colorButton = document.createElement("button");
+colorButton.textContent = "Color";
+controls.appendChild(colorButton);
+colorButton.addEventListener("click", () => {
+  changeColor();
+});
+
+function changeColor() {
+  const gridItems = document.querySelectorAll(".griditem");
+  gridItems.forEach(gridItem => {
+    gridItem.removeEventListener("mouseover", greyscaleHandler);
+    gridItem.addEventListener("mouseover", colorHandler);
+  });
+}
+
+let colorHandler = event => {
+  event.target.dataset.value = 110;
+  event.target.style.backgroundColor =
+    "rgb(" + getRandomInt() + "," + getRandomInt() + "," + getRandomInt() + ")";
+};
+
+const greyscaleButton = document.createElement("button");
+greyscaleButton.textContent = "Greyscale";
+controls.appendChild(greyscaleButton);
+
+greyscaleButton.addEventListener("click", () => {
+  changeGreyscale();
+});
+
+function getRandomInt() {
+  return Math.floor(Math.random() * Math.floor(255));
+}
 
 function getPercentage(squares) {
   return 100 / squares + "%";
