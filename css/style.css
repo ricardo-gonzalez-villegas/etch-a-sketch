@@ -2,16 +2,29 @@ body {
     width: 100%;
     height: 100%;
 }
-#container {
-    width: 600px;
-    height: 600px;
-    box-sizing: border-box;
-    border: 1px solid black;
-    position: relative;
-    top: 20px;
+#case {
+    width: 740px;
+    height: 660px;
+    background-color: #d6060e;
     margin: 0 auto;
-
+    position: relative;
+    z-index: 1;
+    top: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 2rem;
 }
+
+#container {
+    width: 550px;
+    height: 450px;
+    position: relative;
+    top: 40px;
+    margin: 0 auto;
+    z-index: 2;
+    background: white;
+    box-shadow: 0 0 3rem;
+}
+
 .griditem {
     box-sizing: border-box;
     float: left;
@@ -20,9 +33,71 @@ body {
 }
 
 #controls {
-    width: 100px;
-    height: 50px;
+    width: 100%;
+    height: 90px;
     position: relative;
-    top: 40px;
+    top: 50px;
     margin: 0 auto;
+}
+
+.leftside {
+    position: relative;
+    float: left;
+    height: 90px;
+    width: 90px;
+    border-radius: 100%;
+    left: 20px;
+    font-size: 16px;
+    box-shadow: 0 0 1rem;
+    font-family: sans-serif;
+}
+
+.rightside {
+    position: relative;
+    float: right;
+    height: 90px;
+    width: 90px;
+    border-radius: 100%;
+    right: 20px;
+    font-size: 16px;
+    box-shadow: 0 0 1rem;
+    font-family: sans-serif;
+}
+
+.reset {
+    position: relative;
+    top: 10px;
+    left: 170px;
+    height: 60px;
+    width: 60px;
+    font-size: 16px;
+    font-family: sans-serif;
+    box-sizing: border-box;
+    border: 2px solid gold;
+    background: none;
+    color: gold;
+}
+
+#reset-container {
+    position: relative;
+    top: 10px;
+    height: 60px;
+    width: 100%;
+}
+
+#logo-container {
+    position: relative;
+    float: right;
+    height: 40px;
+    width: 400px;
+    top: 20px;
+    right: 130px;
+    margin: 0 auto;
+}
+#logo {
+    font-size: 30px;
+    color: gold;
+    text-align: center;
+    font-family: sans-serif;
+    display: block;
 }
