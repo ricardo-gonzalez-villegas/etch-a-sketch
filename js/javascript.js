@@ -1,3 +1,4 @@
+//Coded by Ricardo Gonzalez
 const container = document.querySelector("#container");
 const body = document.querySelector("body");
 const controls = document.querySelector("#controls");
@@ -82,14 +83,14 @@ resetButtonContainer.appendChild(resetButton).classList.add("reset");
 resetContainer.appendChild(resetButtonContainer);
 
 resetButton.addEventListener("click", () => {
-  let squares = prompt("How many squares per side?", 16);
-  if (squares === "" || squares === null) return;
+  let squares = prompt("How many squares per side? (Between 16 & 120)", 16);
+  if (squares === "" || squares === null || squares < 16 || squares > 120) return;
   clearContainer();
   createNewGrid(squares);
 });
 
 const colorButton = document.createElement("button");
-colorButton.textContent = "Color";
+colorButton.textContent = "Colored";
 
 const colorButtonContainer = document.createElement("div");
 colorButtonContainer.appendChild(colorButton).classList.add("rightside");
@@ -114,7 +115,7 @@ function changeColor() {
 }
 
 function getRandomInt() {
-  return Math.floor(Math.random() * Math.floor(255));
+  return Math.floor(Math.random() * Math.floor(256));
 }
 
 function getPercentage(squares) {
